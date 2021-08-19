@@ -16,7 +16,7 @@ from gpflow.base import TensorType
 from gpflow.config import default_float
 
 
-@pytest.mark.parametrize("max_degree", range(1, 10, 3))
+@pytest.mark.parametrize("max_degree", list(range(1, 10, 3)) + [34])
 def test_orthonormal_basis_3d(max_degree):
     """Numerical check that int_{S^2} Y_i(x) Y_j(x) dx = dirac(i,j)"""
 
@@ -42,7 +42,7 @@ def test_orthonormal_basis_3d(max_degree):
 
     inner_products = inner_products / surface_area_sphere(dimension)
 
-    np.testing.assert_array_almost_equal(inner_products, np.eye(len(harmonics_at_x)), decimal=2)
+    np.testing.assert_array_almost_equal(inner_products, np.eye(len(harmonics_at_x)), decimal=1)
 
 
 @pytest.mark.parametrize("max_degree", range(1, 8, 3))
