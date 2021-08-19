@@ -241,4 +241,4 @@ if __name__ == "__main__":
     # with Pool(6) as p:
     #     p.map(regenerate_cache, DIMENSIONS)
 
-    regenerate_cache(16)
+    regenerate_cache(3)

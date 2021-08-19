@@ -144,7 +144,7 @@ class GegenbauerScipyCoefficients:
         self.coefficients = list(C.coefficients)
 
     def __call__(self, x: TensorType) -> TensorType:
-        """ x: [...], return [...] """
+        """x: [...], return [...]"""
         if self.n < 0:
             return tf.zeros_like(x)
         elif self.n == 0:
@@ -156,7 +156,7 @@ class GegenbauerScipyCoefficients:
 
     @property
     def value_at_1(self):
-        """ Gegenbauer evaluated at 1.0 """
+        """Gegenbauer evaluated at 1.0"""
         return self._at_1
 
 

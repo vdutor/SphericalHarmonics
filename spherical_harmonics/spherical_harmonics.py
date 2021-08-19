@@ -17,10 +17,10 @@ from typing import List, Union
 
 import numpy as np
 import tensorflow as tf
-from gspheres.fundamental_set import FundamentalSystemCache, num_harmonics
-from gspheres.gegenbauer_polynomial import Gegenbauer
-from gspheres.utils import surface_area_sphere
 from scipy.special import gegenbauer as scipy_gegenbauer
+from spherical_harmonics.fundamental_set import FundamentalSystemCache, num_harmonics
+from spherical_harmonics.gegenbauer_polynomial import Gegenbauer
+from spherical_harmonics.utils import surface_area_sphere
 
 from gpflow.base import TensorType
 from gpflow.config import default_float

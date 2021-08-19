@@ -65,7 +65,7 @@ def test_objective(dimension, degree):
     C_old = gegenbauer(X_system @ X_system.T)
     det1 = linalg.det(C_new)
 
-    C_1 = gegenbauer(1.)
+    C_1 = gegenbauer(1.0)
     det_C_old = tf.linalg.det(C_old)
     v = calculate_decrement_in_determinant(
         Z, X_system, linalg.cholesky(C_old, lower=True), gegenbauer
