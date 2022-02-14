@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 requirements = [
     "numpy",
@@ -27,6 +27,10 @@ setup(
     version="0.0.1",
     author="vd309@cam.ac.uk",
     description="Python Implementation of Spherical harmonics in dimension >= 3",
+    packages=find_packages("src"),  # include all packages under src
+    package_dir={"": "src"},   # tell distutils packages are under src
     install_requires=requirements,
     packages=[name],
+    include_package_data=True,
+    package_data={"spherical_harmonics": ["fundamental_system/*.npz"]},
 )
