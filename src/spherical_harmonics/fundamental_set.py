@@ -48,7 +48,7 @@ class FundamentalSystemCache:
     harmonics in an arbitrary dimension"""
 
     def __init__(self, dimension: int, load_dir="fundamental_system", only_use_cache: bool = True):
-        self.file_name = resource_filename(__name__, f'{load_dir}/fs_{dimension}D.npz')
+        self.file_name = Path(resource_filename(__name__, f'{load_dir}/fs_{dimension}D.npz'))
         self.dimension = dimension
         self.only_use_cache = only_use_cache
 
