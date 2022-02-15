@@ -21,7 +21,7 @@ from spherical_harmonics.plotting import plotly_plot_spherical_function
 @pytest.fixture
 def spherical_function_to_plot():
     phi = SphericalHarmonics(3, 20)
-    func = lambda x: phi(x)[:, -1].numpy()
+    func = lambda x: phi(x)[:, -1]
     _ = func(np.random.randn(1, 3))
     return func
 

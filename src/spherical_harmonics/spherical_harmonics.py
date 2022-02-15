@@ -15,22 +15,19 @@
 """ Spherical Harmonics and associated utility functions """
 from typing import List, Union
 
+import lab as B
 import numpy as np
-import tensorflow as tf
 from scipy.special import gegenbauer as scipy_gegenbauer
 from spherical_harmonics.fundamental_set import FundamentalSystemCache, num_harmonics
 from spherical_harmonics.gegenbauer_polynomial import Gegenbauer
 from spherical_harmonics.utils import surface_area_sphere
-
-from gpflow.base import TensorType
-from gpflow.config import default_float
 
 
 class SphericalHarmonics:
     r"""
     Contains all the spherical harmonic levels up to a `max_degree`.
     Total number of harmonics in the collection is given by
-    \sum_{degree=0}^max_degree num_harmonics(dimension, degree)
+    :math:`\sum_{degree=0}^{max_degree-1} num_harmonics(dimension, degree)`
     """
 
     def __init__(
@@ -61,27 +58,22 @@ class SphericalHarmonics:
             for degree in degrees
         ]
 
-    @tf.function(input_signature=[tf.TensorSpec(shape=None, dtype=default_float())])
     def __call__(
         self,
-        x: TensorType,
-    ) -> TensorType:
+        x: B.Numeric,
+    ) -> B.Numeric:
         """
         Evaluates each of the spherical harmonic level in the collection,
         and stacks the results.
-        :param x: TensorType, [N, D]
+        :param x: [N, D]
             N points with unit norm in cartesian coordinate system.
         :return: [N, num harmonics in collection]
         """
-        if self.debug:
-            print("print: __call__ spherical harmonics")
-            tf.print("tf.print: __call__ spherical harmonics")
-
         values = map(
             lambda harmonic: harmonic(x), self.harmonic_levels
         )  # List of length `max_degree` with Tensor [num_harmonics_degree, N]
 
-        return tf.transpose(tf.concat(list(values), axis=0))  # [num_harmonics, N]
+        return B.transpose(B.concat(*list(values), axis=0))  # [num_harmonics, N]
 
     def __len__(self):
         return sum(len(harmonic_level) for harmonic_level in self.harmonic_levels)
@@ -91,9 +83,9 @@ class SphericalHarmonics:
 
     def addition(self, X, X2=None):
         """For test purposes only"""
-        return tf.reduce_sum(
-            tf.stack(
-                values=[level.addition(X, X2) for level in self.harmonic_levels],
+        return B.sum(
+            B.stack(
+                *[level.addition(X, X2) for level in self.harmonic_levels],
                 axis=0,
             ),
             axis=0,
@@ -143,20 +135,19 @@ class SphericalHarmonicsLevel:
         self.L_inv = np.linalg.solve(self.L, np.eye(len(self.L)))
         self.gegenbauer = Gegenbauer(self.degree, self.alpha)
 
-    @tf.function(input_signature=[tf.TensorSpec(shape=[None, None], dtype=default_float())])
-    def __call__(self, X: TensorType) -> TensorType:
+    def __call__(self, X: B.Numeric) -> B.Numeric:
         r"""
         :param X: M normalised (i.e. unit) D-dimensional vector, [N, D]
 
         :return: `X` evaluated at the M spherical harmonics in the set.
             [\phi_m(x_i)], shape [M, N]
         """
-        VXT = tf.matmul(self.V, X, transpose_b=True)  # [M, N]
+        VXT = B.matmul(self.V, X, tr_b=True)  # [M, N]
         zonals = self.gegenbauer(VXT)  # [M, N]
-        return tf.matmul(self.L_inv, zonals)  # [M, N]
+        return B.matmul(self.L_inv, zonals)  # [M, N]
 
-    # TODO(Vincent) for some reason Optional[TensorType] doesn't work
-    def addition(self, X: TensorType, Y: TensorType = None) -> TensorType:
+    # TODO(Vincent) for some reason Optional[B.Numeric] doesn't work
+    def addition(self, X: B.Numeric, Y: B.Numeric = None) -> B.Numeric:
         r"""
         Addition theorem. The sum of the product of all the spherical harmonics evaluated
         at x and x' of a specific degree simplifies to the gegenbauer polynomial evaluated
@@ -176,11 +167,11 @@ class SphericalHarmonicsLevel:
         """
         if Y is None:
             Y = X
-        XYT = tf.matmul(X, Y, transpose_b=True)  # [N1, N2]
+        XYT = B.matmul(X, Y, tr_b=True)  # [N1, N2]
         c = self.gegenbauer(XYT)  # [N1, N2]
         return (self.degree / self.alpha + 1.0) * c  # [N1, N2]
 
-    def addition_at_1(self, X: TensorType) -> TensorType:
+    def addition_at_1(self, X: B.Numeric) -> B.Numeric:
         r"""
         Evaluates \sum_k \phi_k(x) \phi_k(x), notice the argument at which we evaluate
         the harmonics is equal. See `self.addition` for the general case.
@@ -194,7 +185,13 @@ class SphericalHarmonicsLevel:
         :param X: only used for it's X.shape[0], [N, D]
         :return: [N, 1]
         """
-        c = tf.ones((X.shape[0], 1), dtype=X.dtype) * self.gegenbauer.value_at_1  # [N, 1]
+        c = (
+            B.ones(
+                X.dtype,
+                *(X.shape[0], 1),
+            )
+            * self.gegenbauer.value_at_1
+        )  # [N, 1]
         return (self.degree / self.alpha + 1.0) * c  # [N, 1]
 
     def eigenvalue(self) -> float:

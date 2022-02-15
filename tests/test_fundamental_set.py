@@ -35,7 +35,7 @@ def det(Z, X_system, C_old, gegenbauer: Gegenbauer):
     X_system: [N, d]
     C_old: [N, N]
     """
-    norm = tf.reduce_sum(Z ** 2) ** 0.5  # scalar
+    norm = tf.reduce_sum(Z**2) ** 0.5  # scalar
     X = Z / norm  # [d]
     XXd = tf.einsum("nd,d->n", X_system, X)  # [N]
     M_cross = gegenbauer(XXd)  # [N]
@@ -49,7 +49,7 @@ def det(Z, X_system, C_old, gegenbauer: Gegenbauer):
 
     C_old_chol = tf.linalg.cholesky(C_old)
     res = tf.linalg.triangular_solve(C_old_chol, M_cross[:, None], lower=True)
-    return tf.reduce_sum(res ** 2)
+    return tf.reduce_sum(res**2)
 
 
 @pytest.mark.parametrize("dimension", [3, 5, 6, 9])

@@ -172,7 +172,7 @@ def plotly_plot_spherical_function(
         return x, y, z
 
     def xyz2rtz(x, y, z):
-        return (x ** 2 + y ** 2) ** 0.5, np.arctan2(y, x), z
+        return (x**2 + y**2) ** 0.5, np.arctan2(y, x), z
 
     def rtz2xyz(r, t, z):
         return r * np.cos(t), r * np.sin(t), z

@@ -1,7 +1,9 @@
 from typing import List, Union
 
+import lab as B
 import numpy as np
 import pytest
+import spherical_harmonics.tensorflow
 import tensorflow as tf
 from spherical_harmonics.fundamental_set import FundamentalSystemCache, build_fundamental_system
 from spherical_harmonics.gegenbauer_polynomial import GegenbauerManualCoefficients
@@ -11,9 +13,6 @@ from spherical_harmonics.utils import (
     spherical_to_cartesian_4d,
     surface_area_sphere,
 )
-
-from gpflow.base import TensorType
-from gpflow.config import default_float
 
 
 @pytest.mark.parametrize("max_degree", list(range(1, 10, 3)) + [34])
@@ -32,7 +31,7 @@ def test_orthonormal_basis_3d(max_degree):
     harmonics = SphericalHarmonics(dimension, max_degree)
     harmonics_at_x = tf.transpose(harmonics(x_cart)).numpy()  # [M, N^2]
 
-    d_x_spherical = 2 * np.pi ** 2 / num_grid ** 2
+    d_x_spherical = 2 * np.pi**2 / num_grid**2
     inner_products = (
         harmonics_at_x
         # sin(phi) to account for the surface area element of S^2
@@ -63,9 +62,9 @@ def test_orthonormal_basis_4d(max_degree):
     x_cart = spherical_to_cartesian_4d(x_spherical)
 
     harmonics = SphericalHarmonics(dimension, max_degree)
-    harmonics_at_x = tf.transpose(harmonics(x_cart)).numpy()  # [M, N^3]
+    harmonics_at_x = tf.transpose(harmonics(x_cart))  # [M, N^3]
 
-    d_x_spherical = 2 * np.pi ** 3 / num_grid ** 3
+    d_x_spherical = 2 * np.pi**3 / num_grid**3
 
     inner_products = np.ones((len(harmonics_at_x), len(harmonics_at_x))) * np.nan
 
@@ -96,11 +95,11 @@ def test_equality_spherical_harmonics_collections(dimension, max_degree):
     num_points = 100
     X = np.random.randn(num_points, dimension)
     # make unit vectors
-    X /= np.sum(X ** 2, axis=-1, keepdims=True) ** 0.5
+    X /= np.sum(X**2, axis=-1, keepdims=True) ** 0.5
 
     np.testing.assert_array_almost_equal(
-        fast_harmonics(X).numpy(),
-        harmonics(X).numpy(),
+        fast_harmonics(X),
+        harmonics(X),
     )
 
 
@@ -110,19 +109,19 @@ def test_addition_theorem(dimension, degree):
     fundamental_system = FundamentalSystemCache(dimension)
     harmonics = SphericalHarmonicsLevel(dimension, degree, fundamental_system)
     X = np.random.randn(100, dimension)
-    X = X / (np.sum(X ** 2, keepdims=True, axis=1) ** 0.5)
+    X = X / (np.sum(X**2, keepdims=True, axis=1) ** 0.5)
     harmonics_at_X = harmonics(X)[..., None]  # [M:=N(dimension, degree), N, 1]
     harmonics_xxT = tf.matmul(harmonics_at_X, harmonics_at_X, transpose_b=True)  # [M, N, N]
 
     # sum over all harmonics in the level
     # addition_manual = harmonics_at_X.T @ harmonics_at_X  # [N, N]
-    addition_manual = tf.reduce_sum(harmonics_xxT, axis=0).numpy()  # [N, N]
-    addition_theorem = harmonics.addition(X).numpy()
+    addition_manual = tf.reduce_sum(harmonics_xxT, axis=0)  # [N, N]
+    addition_theorem = harmonics.addition(X)
 
     np.testing.assert_array_almost_equal(addition_manual, addition_theorem)
 
     np.testing.assert_array_almost_equal(
-        np.diag(addition_manual)[..., None], harmonics.addition_at_1(X).numpy()
+        np.diag(addition_manual)[..., None], harmonics.addition_at_1(X)
     )
 
 
@@ -199,8 +198,7 @@ class SphericalHarmonics2(SphericalHarmonics):
             ]
         )  # [M, M] block diagonal
 
-    @tf.function(input_signature=[tf.TensorSpec(shape=[None, None], dtype=default_float())])
-    def __call__(self, X: TensorType) -> TensorType:
+    def __call__(self, X: B.Numeric) -> B.Numeric:
         """
         Evaluates each of the spherical harmonics in the collection,
         and stacks the results.

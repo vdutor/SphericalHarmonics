@@ -1,0 +1,9 @@
+matplotlib
+
+tensorflow
+tensorflow-probability
+
+black
+flake8
+pytest
+isort

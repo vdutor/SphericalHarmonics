@@ -13,10 +13,9 @@
 # limitations under the License.
 
 from pathlib import Path
-from pkg_resources import resource_filename
-
 
 import numpy as np
+from pkg_resources import resource_filename
 from scipy import linalg, optimize
 from scipy.special import comb as combinations
 from scipy.special import gegenbauer as ScipyGegenbauer
@@ -48,7 +47,7 @@ class FundamentalSystemCache:
     harmonics in an arbitrary dimension"""
 
     def __init__(self, dimension: int, load_dir="fundamental_system", only_use_cache: bool = True):
-        self.file_name = Path(resource_filename(__name__, f'{load_dir}/fs_{dimension}D.npz'))
+        self.file_name = Path(resource_filename(__name__, f"{load_dir}/fs_{dimension}D.npz"))
         self.dimension = dimension
         self.only_use_cache = only_use_cache
 
