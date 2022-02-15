@@ -41,7 +41,7 @@ check: ## Runs all static checks such as code formatting checks, linting, mypy
 	@echo "\n=== flake8 (linting)===================================="
 	flake8 --statistics \
 		   --per-file-ignores=$(LINT_FILE_IGNORES) \
-		   --exclude=.ipynb_checkpoints ./gspheres
+		   --exclude=.ipynb_checkpoints
 	@echo "\n=== mypy (static type checking) ========================"
 	mypy $(TYPE_NAMES)
 

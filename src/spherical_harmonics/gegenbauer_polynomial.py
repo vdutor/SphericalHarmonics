@@ -19,7 +19,7 @@ import lab as B
 import numpy as np
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
-from spherical_harmonics.lab_extras import polyval, from_numpy
+from spherical_harmonics.lab_extras import from_numpy, polyval
 
 
 class Polynomial:
@@ -56,7 +56,7 @@ class Polynomial:
         cs = B.reshape(self.coefficients, 1, -1)  # [1, M]
         ps = B.reshape(self.powers, 1, -1)  # [1, M]
         x_flat = B.reshape(x, -1, 1)  # [N, 1]
-        val = B.sum(cs * (x_flat ** ps), axis=1)  # [N, M]  # [N]
+        val = B.sum(cs * (x_flat**ps), axis=1)  # [N, M]  # [N]
         return B.reshape(val, *B.shape(x))
 
 

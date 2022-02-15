@@ -87,4 +87,4 @@ def l2norm(X: B.Numeric) -> B.Numeric:
     :param X: [..., D]
     :return: norm for each element in `X`, [N, 1]
     """
-    return B.sum(X ** 2, squeeze=False, axis=-1) ** 0.5
+    return B.sum(X**2, squeeze=False, axis=-1) ** 0.5

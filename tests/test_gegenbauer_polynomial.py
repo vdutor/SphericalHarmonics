@@ -3,9 +3,8 @@ from functools import reduce
 
 import numpy as np
 import pytest
-import tensorflow as tf
 import spherical_harmonics.tensorflow
-
+import tensorflow as tf
 from scipy.integrate import quad
 from scipy.special import factorial, gamma
 from scipy.special import gegenbauer as scipy_gegenbauer
@@ -24,7 +23,7 @@ def test_polynomial():
     ps = np.array([3.0, 5.0, 8.0], dtype=np.float64)
 
     np.testing.assert_array_almost_equal(
-        reduce(operator.add, (c * x ** p for c, p in zip(cs, ps))),
+        reduce(operator.add, (c * x**p for c, p in zip(cs, ps))),
         Polynomial(cs, ps)(x),
     )
 
@@ -74,7 +73,7 @@ def test_normalisation_gegenbauer(degree, dimension, GegenbauerClass):
         return gegenbauer(tf.cast(t, dtype=tf.float64)).numpy()
 
     def func(t):
-        return c(t) ** 2 * (1 - t ** 2) ** (alpha - 0.5)
+        return c(t) ** 2 * (1 - t**2) ** (alpha - 0.5)
 
     desired = quad(func, -1, 1)[0]
     value = c(1) * alpha / (degree + alpha) * omega_d
