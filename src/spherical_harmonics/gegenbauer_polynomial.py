@@ -21,7 +21,7 @@ import numpy as np
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
 
-from gpflow.base import TensorType
+from spherical_harmonics.lab_extras import polyval
 
 
 class Polynomial:
@@ -47,7 +47,7 @@ class Polynomial:
         self.coefficients = coefficients
         self.powers = powers
 
-    def __call__(self, x: TensorType) -> TensorType:
+    def __call__(self, x: B.Numeric) -> B.Numeric:
         """
         Evaluates the polynomial @ `x`
         :param x: 1D input values at which to evaluate the polynomial, [...]
@@ -55,11 +55,11 @@ class Polynomial:
         :return:
             function evaluations, same shape as `x` [...]
         """
-        cs = tf.reshape(self.coefficients, (1, -1))  # [1, M]
-        ps = tf.reshape(self.powers, (1, -1))  # [1, M]
-        x_flat = tf.reshape(x, (-1, 1))  # [N, 1]
-        val = tf.reduce_sum(cs * (x_flat ** ps), axis=1)  # [N, M]  # [N]
-        return tf.reshape(val, tf.shape(x))
+        cs = B.reshape(self.coefficients, 1, -1)  # [1, M]
+        ps = B.reshape(self.powers, 1, -1)  # [1, M]
+        x_flat = B.reshape(x, -1, 1)  # [N, 1]
+        val = B.sum(cs * (x_flat ** ps), axis=1)  # [N, M]  # [N]
+        return B.reshape(val, *B.shape(x))
 
 
 class GegenbauerManualCoefficients(Polynomial):
@@ -94,7 +94,9 @@ class GegenbauerManualCoefficients(Polynomial):
         self.alpha = alpha
         self._at_1 = scipy_gegenbauer(self.n, self.alpha)(1.0)
 
-    def _compute_coefficients_and_powers(self, n: int, alpha: float) -> Tuple[List, List]:
+    def _compute_coefficients_and_powers(
+        self, n: int, alpha: float
+    ) -> Tuple[List, List]:
         """
         Compute the weights (coefficients) and powers of the Gegenbauer functions
         expressed as polynomial.
@@ -116,11 +118,11 @@ class GegenbauerManualCoefficients(Polynomial):
 
         return coefficients, powers
 
-    def __call__(self, x: TensorType) -> TensorType:
+    def __call__(self, x: B.Numeric) -> B.Numeric:
         if self.n < 0:
-            return tf.zeros_like(x)
+            return B.zeros(x)
         elif self.n == 0:
-            return tf.ones_like(x)
+            return B.ones(x)
         elif self.n == 1:
             return 2 * self.alpha * x
         else:
@@ -144,16 +146,16 @@ class GegenbauerScipyCoefficients:
         self._at_1 = C(1.0)
         self.coefficients = list(C.coefficients)
 
-    def __call__(self, x: TensorType) -> TensorType:
+    def __call__(self, x: B.Numeric) -> B.Numeric:
         """x: [...], return [...]"""
         if self.n < 0:
-            return tf.zeros_like(x)
+            return B.zeros(x)
         elif self.n == 0:
-            return tf.ones_like(x)
+            return B.ones(x)
         elif self.n == 1:
             return 2 * self.alpha * x
 
-        return tf.math.polyval(self.coefficients, x)
+        return polyval(self.coefficients, x)
 
     @property
     def value_at_1(self):

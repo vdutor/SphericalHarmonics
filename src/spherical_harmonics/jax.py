@@ -1,3 +1,3 @@
 import lab.jax  # noqa
 
-import geometric_kernels.lab_extras.jax  # noqa
+import spherical_harmonics.lab_extras.jax  # noqa

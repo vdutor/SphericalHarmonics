@@ -13,10 +13,9 @@
 # limitations under the License.
 
 import numpy as np
-import tensorflow as tf
-from scipy.special import gamma
+import lab as B
 
-from gpflow.base import TensorType
+from scipy.special import gamma
 
 
 def surface_area_sphere(d: int) -> float:
@@ -81,7 +80,7 @@ def spherical_to_cartesian(thetas, r=1.0):
     return np.c_[x, y, z]
 
 
-def l2norm(X: TensorType) -> TensorType:
+def l2norm(X: B.Numeric) -> B.Numeric:
     """
     Returns the norm of the vectors in `X`. The vectors are
     D-dimensional and  stored in the last dimension of `X`.
@@ -89,4 +88,4 @@ def l2norm(X: TensorType) -> TensorType:
     :param X: [..., D]
     :return: norm for each element in `X`, [N, 1]
     """
-    return tf.reduce_sum(X ** 2, keepdims=True, axis=-1) ** 0.5
+    return B.sum(X ** 2, squeeze=False, axis=-1) ** 0.5

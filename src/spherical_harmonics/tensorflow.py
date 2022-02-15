@@ -1,3 +1,3 @@
 import lab.tensorflow  # noqa
 
-import geometric_kernels.lab_extras.tensorflow  # noqa
+import spherical_harmonics.lab_extras.tensorflow  # noqa

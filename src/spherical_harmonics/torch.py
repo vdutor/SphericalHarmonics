@@ -1,3 +1,3 @@
 import lab.torch  # noqa
 
-import geometric_kernels.lab_extras.torch  # noqa
+import spherical_harmonics.lab_extras.torch  # noqa
