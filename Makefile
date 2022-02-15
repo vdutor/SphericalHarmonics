@@ -3,8 +3,8 @@
 
 LIB_NAME = spherical_harmonics
 TESTS_NAME = tests
-LINT_NAMES = $(LIB_NAME) $(TESTS_NAME)
-TYPE_NAMES = $(LIB_NAME)
+LINT_NAMES = src/$(LIB_NAME) $(TESTS_NAME)
+TYPE_NAMES = src/$(LIB_NAME)
 SUCCESS='\033[0;32m'
 UNAME_S = $(shell uname -s)
 
@@ -20,6 +20,7 @@ help: ## Shows this help message
 
 install:  ## Install repo for developement
 	@echo "\n=== pip install package with requirements =============="
+	LAB_NO_BUILD=1 pip install backends
 	pip install -e .
 	@echo "\n=== pip install dev requirements ======================"
 	pip install -r requirements.txt

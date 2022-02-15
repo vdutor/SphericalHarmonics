@@ -15,8 +15,9 @@
 import math
 from typing import List, Tuple, Union
 
+import lab as B
+
 import numpy as np
-import tensorflow as tf
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
 

@@ -1,12 +1,20 @@
 # Spherical Harmonics
 
-This package implements spherical harmonics in $d$-dimensions in Python. The spherical harmonics are defined as zonal functions through the Gegenbauer polynomials and a fundamental system of points (see [Dai and Xu (2013)](https://arxiv.org/pdf/1304.2585.pdf), defintion 3.1). The spherical harmonics form a ortho-normal set on the hypersphere $\mathcal{S}^{d-1}$. This package implements a greedy algorithm to compute the fundamental set for dimensions up to 20.
+This package implements spherical harmonics in d-dimensions in Python. The spherical harmonics are defined as zonal functions through the Gegenbauer polynomials and a fundamental system of points (see [Dai and Xu (2013)](https://arxiv.org/pdf/1304.2585.pdf), defintion 3.1). The spherical harmonics form a ortho-normal set on the hypersphere. This package implements a greedy algorithm to compute the fundamental set for dimensions up to 20.
+
+The computations of this package can be carried out in either TensorFlow, Pytorch, Jax or NumPy.
+A specific backend can be chosen by simply importing it as follows
+```
+import spherical_harmonics.tensorflow  # noqa
+```
 
 ## Example
 
 ### 3 Dimensional
 ```python
 import numpy as np
+import spherical_harmonics.tensorflow  # run computation in TensorFlow
+
 from spherical_harmonics import SphericalHarmonics
 from spherical_harmonics.utils import l2norm
 
@@ -95,6 +103,14 @@ after specifying the desired options in the file.
 ## Installation
 
 The package is not available on PyPi. The recommended way to install it is to clone it from GitHub and to run (ideally in a [virtual environment](https://docs.python.org/3/tutorial/venv.html) or [`poetry`](https://python-poetry.org/) shell)
+
+First install [Lab](https://github.com/wesselb/lab) following [these instructions](https://gist.github.com/wesselb/4b44bf87f3789425f96e26c4308d0adc),
+then simply
+```
+pip install backends
+```
+
+Install package dependencies
 ```
 pip install -r requirements.py
 ```
@@ -109,7 +125,7 @@ We also recommend installing the dependencies to run the tests
 pip install -r test_requirements.py
 ```
 
-Checking a if the installation was successful can be done by running the test
+Checking if the installation was successful can be done by running the test
 ```
 make test
 ```
