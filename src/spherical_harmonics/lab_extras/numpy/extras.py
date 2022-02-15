@@ -9,7 +9,7 @@ _Numeric = Union[B.Number, B.NPNumeric]
 
 
 @dispatch
-def polyval(coeffs: List, x: _Numeric) -> _Numeric:  # type: ignore
+def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
     """
     Computes the elementwise value of a polynomial.
 
@@ -23,7 +23,7 @@ def polyval(coeffs: List, x: _Numeric) -> _Numeric:  # type: ignore
 
 
 @dispatch
-def from_numpy(_: B.NPNumeric, b: Union[List, B.NPNumeric, B.Number]):  # type: ignore
+def from_numpy(_: B.NPNumeric, b: Union[list, List, B.NPNumeric, B.Number]):  # type: ignore
     """
     Converts the array `b` to a tensor of the same backend as `a`
     """

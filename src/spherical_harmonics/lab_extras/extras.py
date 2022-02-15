@@ -8,7 +8,7 @@ from plum import Union
 
 @dispatch
 @abstract()
-def polyval(coeffs: List, x: B.Numeric):
+def polyval(coeffs: list, x: B.Numeric):
     """
     Computes the elementwise value of a polynomial.
 
@@ -22,7 +22,7 @@ def polyval(coeffs: List, x: B.Numeric):
 
 @dispatch
 @abstract()
-def from_numpy(_: B.Numeric, b: Union[List, B.Numeric, B.NPNumeric]):
+def from_numpy(_: B.Numeric, b: Union[list, List, B.Numeric, B.NPNumeric]):
     """
     Converts the array `b` to a tensor of the same backend as `a`
     """

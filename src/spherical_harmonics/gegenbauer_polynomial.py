@@ -19,7 +19,7 @@ import lab as B
 import numpy as np
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
-from spherical_harmonics.lab_extras import polyval
+from spherical_harmonics.lab_extras import polyval, from_numpy
 
 
 class Polynomial:

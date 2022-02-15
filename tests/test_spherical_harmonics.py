@@ -5,6 +5,8 @@ import lab as B
 import numpy as np
 import pytest
 import tensorflow as tf
+import spherical_harmonics.tensorflow
+
 from spherical_harmonics.fundamental_set import (
     FundamentalSystemCache,
     build_fundamental_system,
@@ -70,7 +72,7 @@ def test_orthonormal_basis_4d(max_degree):
     x_cart = spherical_to_cartesian_4d(x_spherical)
 
     harmonics = SphericalHarmonics(dimension, max_degree)
-    harmonics_at_x = tf.transpose(harmonics(x_cart)).numpy()  # [M, N^3]
+    harmonics_at_x = tf.transpose(harmonics(x_cart))  # [M, N^3]
 
     d_x_spherical = 2 * np.pi ** 3 / num_grid ** 3
 
@@ -108,8 +110,8 @@ def test_equality_spherical_harmonics_collections(dimension, max_degree):
     X /= np.sum(X ** 2, axis=-1, keepdims=True) ** 0.5
 
     np.testing.assert_array_almost_equal(
-        fast_harmonics(X).numpy(),
-        harmonics(X).numpy(),
+        fast_harmonics(X),
+        harmonics(X),
     )
 
 
@@ -127,13 +129,13 @@ def test_addition_theorem(dimension, degree):
 
     # sum over all harmonics in the level
     # addition_manual = harmonics_at_X.T @ harmonics_at_X  # [N, N]
-    addition_manual = tf.reduce_sum(harmonics_xxT, axis=0).numpy()  # [N, N]
-    addition_theorem = harmonics.addition(X).numpy()
+    addition_manual = tf.reduce_sum(harmonics_xxT, axis=0)  # [N, N]
+    addition_theorem = harmonics.addition(X)
 
     np.testing.assert_array_almost_equal(addition_manual, addition_theorem)
 
     np.testing.assert_array_almost_equal(
-        np.diag(addition_manual)[..., None], harmonics.addition_at_1(X).numpy()
+        np.diag(addition_manual)[..., None], harmonics.addition_at_1(X)
     )
 
 

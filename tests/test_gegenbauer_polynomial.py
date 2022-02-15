@@ -4,6 +4,8 @@ from functools import reduce
 import numpy as np
 import pytest
 import tensorflow as tf
+import spherical_harmonics.tensorflow
+
 from scipy.integrate import quad
 from scipy.special import factorial, gamma
 from scipy.special import gegenbauer as scipy_gegenbauer
@@ -23,12 +25,12 @@ def test_polynomial():
 
     np.testing.assert_array_almost_equal(
         reduce(operator.add, (c * x ** p for c, p in zip(cs, ps))),
-        Polynomial(cs, ps)(x).numpy(),
+        Polynomial(cs, ps)(x),
     )
 
     np.testing.assert_array_almost_equal(
         cs[0] * x ** ps[0] + cs[1] * x ** ps[1] + cs[2] * x ** ps[2],
-        Polynomial(cs, ps)(x).numpy(),
+        Polynomial(cs, ps)(x),
     )
 
 
@@ -40,7 +42,7 @@ def test_Gegenbauer(alpha, n, GegenbauerClass):
 
     np.testing.assert_array_almost_equal(
         scipy_gegenbauer(n, alpha)(x),
-        GegenbauerClass(n, alpha)(tf.convert_to_tensor(x)).numpy(),
+        GegenbauerClass(n, alpha)(tf.convert_to_tensor(x)),
     )
 
 
@@ -51,12 +53,12 @@ def test_Gegenbauer_extreme(max_degree, dimension):
 
     np.testing.assert_array_almost_equal(
         scipy_gegenbauer(max_degree, alpha)(x),
-        Gegenbauer(max_degree, alpha)(tf.convert_to_tensor(x)).numpy(),
+        Gegenbauer(max_degree, alpha)(tf.convert_to_tensor(x)),
     )
 
     np.testing.assert_array_almost_equal(
         scipy_gegenbauer(max_degree, alpha)(x),
-        GegenbauerScipyCoefficients(max_degree, alpha)(tf.convert_to_tensor(x)).numpy(),
+        GegenbauerScipyCoefficients(max_degree, alpha)(tf.convert_to_tensor(x)),
     )
 
 
