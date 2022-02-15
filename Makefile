@@ -25,7 +25,8 @@ install:  ## Install repo for developement
 	@echo "\n=== pip install dev requirements ======================"
 	pip install -r requirements.txt
 	@echo "\n=== pip install test requirements ======================"
-	pip install -r tests_requirements.txt
+	pip install -r dev_requirements.txt
+
 
 format: ## Formats code with `black` and `isort`
 	@echo "\n=== isort =============================================="

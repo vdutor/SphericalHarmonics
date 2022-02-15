@@ -1,0 +1,6 @@
+pytest
+isort
+matplotlib
+
+tensorflow
+tensorflow-probability

@@ -16,11 +16,9 @@ import math
 from typing import List, Tuple, Union
 
 import lab as B
-
 import numpy as np
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
-
 from spherical_harmonics.lab_extras import polyval
 
 
@@ -94,9 +92,7 @@ class GegenbauerManualCoefficients(Polynomial):
         self.alpha = alpha
         self._at_1 = scipy_gegenbauer(self.n, self.alpha)(1.0)
 
-    def _compute_coefficients_and_powers(
-        self, n: int, alpha: float
-    ) -> Tuple[List, List]:
+    def _compute_coefficients_and_powers(self, n: int, alpha: float) -> Tuple[List, List]:
         """
         Compute the weights (coefficients) and powers of the Gegenbauer functions
         expressed as polynomial.

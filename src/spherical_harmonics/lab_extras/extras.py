@@ -8,7 +8,7 @@ from plum import Union
 
 @dispatch
 @abstract()
-def polyval(coeffs: B.Numeric, x: B.Numeric):
+def polyval(coeffs: List, x: B.Numeric):
     """
     Computes the elementwise value of a polynomial.
 

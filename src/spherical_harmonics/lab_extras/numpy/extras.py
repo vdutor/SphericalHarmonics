@@ -9,7 +9,7 @@ _Numeric = Union[B.Number, B.NPNumeric]
 
 
 @dispatch
-def polyval(coeffs: _Numeric, x: _Numeric) -> _Numeric:  # type: ignore
+def polyval(coeffs: List, x: _Numeric) -> _Numeric:  # type: ignore
     """
     Computes the elementwise value of a polynomial.
 
