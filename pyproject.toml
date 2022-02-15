@@ -1,0 +1,20 @@
+[tool.isort]
+profile = "black"
+skip_glob = [
+    "**/__init__.py",
+]
+known_third_party = [
+     "lab",
+     "plum",
+]
+
+
+[tool.mypy]
+ignore_missing_imports = true
+strict_optional = false
+allow_redefinition = true
+
+
+[tool.black]
+line-length = 88
+target-version = ['py37']

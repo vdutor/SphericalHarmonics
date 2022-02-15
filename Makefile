@@ -10,7 +10,7 @@ UNAME_S = $(shell uname -s)
 
 # the --per-file-ignores are to ignore "unused import" warnings in __init__.py files (F401)
 # the F403 ignore in gpflux/__init__.py allows the `from .<submodule> import *`
-LINT_FILE_IGNORES = "$(LIB_NAME)/__init__.py:F401,F403"
+LINT_FILE_IGNORES = "src/$(LIB_NAME)/__init__.py:F401,F403"
 
 
 help: ## Shows this help message
@@ -29,15 +29,19 @@ install:  ## Install repo for developement
 
 
 format: ## Formats code with `black` and `isort`
+	@echo "\n=== Autoflake =============================================="
+ 	autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place --exclude=__init__.py $(LINT_NAMES)
 	@echo "\n=== isort =============================================="
-	isort .
+	isort $(LINT_NAMES)
 	@echo "\n=== black =============================================="
-	black --line-length=100 $(LINT_NAMES)
+	black $(LINT_NAMES)
 
 
 check: ## Runs all static checks such as code formatting checks, linting, mypy
 	@echo "\n=== black (formatting) ================================="
-	black --check --line-length=100 $(LINT_NAMES)
+	black --check --diff $(LINT_NAMES)
+	@echo "\n=== isort (formatting) ================================="
+	isort --check --diff $(LINT_NAMES)
 	@echo "\n=== flake8 (linting)===================================="
 	flake8 --statistics \
 		   --per-file-ignores=$(LINT_FILE_IGNORES) \
