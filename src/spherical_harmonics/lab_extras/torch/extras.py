@@ -9,7 +9,7 @@ _Numeric = Union[B.Number, B.TorchNumeric]
 
 
 @dispatch
-def polyval(coeffs: _Numeric, x: _Numeric) -> _Numeric:  # type: ignore
+def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
     """
     Computes the elementwise value of a polynomial.
 
@@ -21,9 +21,9 @@ def polyval(coeffs: _Numeric, x: _Numeric) -> _Numeric:  # type: ignore
     """
     curVal = 0
     for i in range(len(coeffs) - 1):
-        curVal = (curVal + coeffs[i]) * x[0]
+        curVal = (curVal + coeffs[i]) * x
 
-    return curVal + coeffs[len(coeffs) - 1]
+    return curVal + coeffs[-1]
 
 
 @dispatch

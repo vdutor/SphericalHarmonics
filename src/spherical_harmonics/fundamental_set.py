@@ -70,7 +70,7 @@ class FundamentalSystemCache:
         """Return the key used in the cache"""
         return f"degree_{degree}"
 
-    def load(self, degree: int) -> np.array:
+    def load(self, degree: int) -> np.ndarray:
         """Load or calculate the set for given degree"""
         key = self.cache_key(degree)
         if key not in self.cache:
@@ -101,7 +101,7 @@ class FundamentalSystemCache:
     @staticmethod
     def calculate(
         dimension: int, degree: int, *, gtol: float = 1e-5, num_restarts: int = 1
-    ) -> np.array:
+    ) -> np.ndarray:
         return build_fundamental_system(
             dimension, degree, gtol=gtol, num_restarts=num_restarts
         )

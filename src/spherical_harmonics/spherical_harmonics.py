@@ -199,7 +199,7 @@ class SphericalHarmonicsLevel:
         )  # [N, 1]
         return (self.degree / self.alpha + 1.0) * c  # [N, 1]
 
-    def eigenvalue(self) -> float:
+    def eigenvalue(self) -> Union[int, float, np.ndarray]:
         """
         Spherical harmonics are eigenfunctions of the Laplace-Beltrami operator
         (also known as the Spherical Laplacian). We return the associated
