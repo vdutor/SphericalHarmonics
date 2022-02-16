@@ -18,6 +18,7 @@ from typing import List, Union
 import lab as B
 import numpy as np
 from scipy.special import gegenbauer as scipy_gegenbauer
+
 from spherical_harmonics.fundamental_set import FundamentalSystemCache, num_harmonics
 from spherical_harmonics.gegenbauer_polynomial import Gegenbauer
 from spherical_harmonics.utils import surface_area_sphere
@@ -46,7 +47,9 @@ class SphericalHarmonics:
             in the collection (exclusive)
         :param debug: print debug messages.
         """
-        assert dimension >= 3, f"Lowest supported dimension is 3, you specified {dimension}"
+        assert (
+            dimension >= 3
+        ), f"Lowest supported dimension is 3, you specified {dimension}"
         self.debug = debug
 
         if isinstance(degrees, int):
@@ -117,7 +120,9 @@ class SphericalHarmonicsLevel:
             For a circle d=2, for a ball d=3
         param degree: degree of the harmonic, also referred to as level.
         """
-        assert dimension >= 3, f"Lowest supported dimension is 3, you specified {dimension}"
+        assert (
+            dimension >= 3
+        ), f"Lowest supported dimension is 3, you specified {dimension}"
         self.dimension, self.degree = dimension, degree
         self.alpha = (self.dimension - 2) / 2.0
         self.num_harmonics_in_level = num_harmonics(self.dimension, self.degree)

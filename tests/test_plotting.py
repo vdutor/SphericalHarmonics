@@ -14,6 +14,7 @@
 
 import numpy as np
 import pytest
+
 from spherical_harmonics import SphericalHarmonics
 from spherical_harmonics.plotting import plotly_plot_spherical_function
 
@@ -29,6 +30,9 @@ def spherical_function_to_plot():
 @pytest.mark.parametrize("use_mesh", [True, False])
 @pytest.mark.parametrize("animate_steps", [0, 11])
 def test_plotting(spherical_function_to_plot, use_mesh, animate_steps):
-    fig = plotly_plot_spherical_function(
-        spherical_function_to_plot, resolution=10, animate_steps=animate_steps, use_mesh=use_mesh
+    _ = plotly_plot_spherical_function(
+        spherical_function_to_plot,
+        resolution=10,
+        animate_steps=animate_steps,
+        use_mesh=use_mesh,
     )

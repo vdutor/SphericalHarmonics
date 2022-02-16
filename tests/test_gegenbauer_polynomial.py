@@ -3,11 +3,12 @@ from functools import reduce
 
 import numpy as np
 import pytest
-import spherical_harmonics.tensorflow
 import tensorflow as tf
 from scipy.integrate import quad
 from scipy.special import factorial, gamma
 from scipy.special import gegenbauer as scipy_gegenbauer
+
+import spherical_harmonics.tensorflow  # noqa
 from spherical_harmonics.gegenbauer_polynomial import (
     Gegenbauer,
     GegenbauerScipyCoefficients,

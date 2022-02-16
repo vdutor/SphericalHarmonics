@@ -30,22 +30,22 @@ install:  ## Install repo for developement
 
 format: ## Formats code with `black` and `isort`
 	@echo "\n=== Autoflake =============================================="
- 	autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place --exclude=__init__.py $(LINT_NAMES)
-	@echo "\n=== isort =============================================="
-	isort $(LINT_NAMES)
+	autoflake --remove-all-unused-imports --recursive \
+			--remove-unused-variables --in-place --exclude=__init__.py \
+			$(LINT_NAMES)
 	@echo "\n=== black =============================================="
 	black $(LINT_NAMES)
+	@echo "\n=== isort =============================================="
+	isort $(LINT_NAMES)
 
 
 check: ## Runs all static checks such as code formatting checks, linting, mypy
+	@echo "\n=== flake8 (linting)===================================="
+	flake8 --statistics --exclude=.ipynb_checkpoints
 	@echo "\n=== black (formatting) ================================="
 	black --check --diff $(LINT_NAMES)
 	@echo "\n=== isort (formatting) ================================="
 	isort --check --diff $(LINT_NAMES)
-	@echo "\n=== flake8 (linting)===================================="
-	flake8 --statistics \
-		   --per-file-ignores=$(LINT_FILE_IGNORES) \
-		   --exclude=.ipynb_checkpoints
 	@echo "\n=== mypy (static type checking) ========================"
 	mypy $(TYPE_NAMES)
 

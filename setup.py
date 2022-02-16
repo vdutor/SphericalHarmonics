@@ -20,15 +20,13 @@ requirements = [
     "tensorflow>=2.4.0",
 ]
 
-name = 'spherical_harmonics'
-
 setup(
     name="Spherical Harmonics",
     version="0.0.1",
     author="vd309@cam.ac.uk",
     description="Python Implementation of Spherical harmonics in dimension >= 3",
     packages=find_packages("src"),  # include all packages under src
-    package_dir={"": "src"},   # tell distutils packages are under src
+    package_dir={"": "src"},  # tell distutils packages are under src
     install_requires=requirements,
     include_package_data=True,
     package_data={"spherical_harmonics": ["fundamental_system/*.npz"]},

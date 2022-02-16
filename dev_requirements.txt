@@ -8,3 +8,4 @@ flake8
 pytest
 isort
 autoflake
+mypy
