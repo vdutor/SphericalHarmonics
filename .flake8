@@ -1,10 +1,13 @@
 [flake8]
+max-line-length = 88
+select = C,E,F,W,B,B9
 # ignore:
 # E226 missing whitespace around arithmetic operator
 # W503 Line break occurred before a binary operator
 # W504 line break after binary operator
 # F811 redefinition because of multiple dispatch
-ignore = E226,W503,W504,F811
-max-line-length = 100
+# E731 do not assign a lambda expression, use a def
+ignore = E203, E501, W503, E226, W503, W504, F811, E731
 max-complexity = 10
-exclude = .git,__pycache__,.mypy_cache,.pytest_cache
+exclude = __init__.py,.git,__pycache__,.mypy_cache,.pytest_cache
+per-file-ignores = **/__init__.py:F401,F403

@@ -16,9 +16,9 @@ import numpy as np
 import pytest
 import tensorflow as tf
 import tensorflow_probability as tfp
-from numpy.core.defchararray import lower
 from scipy import linalg
 from scipy.special import gegenbauer as ScipyGegenbauer
+
 from spherical_harmonics.fundamental_set import (
     FundamentalSystemCache,
     calculate_decrement_in_determinant,
@@ -86,7 +86,9 @@ def test_grad_objective(dimension, degree):
     X_system = X_system[:-1]
     C_old = gegenbauer(tf.matmul(X_system, X_system, transpose_b=True))
 
-    _, dv1 = tfp.math.value_and_gradient(lambda Z: det(Z, X_system, C_old, gegenbauer), Z)
+    _, dv1 = tfp.math.value_and_gradient(
+        lambda Z: det(Z, X_system, C_old, gegenbauer), Z
+    )
     dv1 = dv1.numpy()
     dv2 = grad_calculate_decrement_in_determinant(
         Z.numpy(),
