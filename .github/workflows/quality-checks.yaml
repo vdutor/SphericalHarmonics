@@ -1,0 +1,38 @@
+name: QualityChecks
+
+on: [push]
+
+jobs:
+  check-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+      fail-fast: false
+
+    name: Python-${{ matrix.python-version }}
+    steps:
+      #----------------------------------------------
+      #       check-out repo and set-up python
+      #----------------------------------------------
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+      #----------------------------------------------
+      #       install
+      #----------------------------------------------
+    - name: Install dependencies
+      run: |
+        export LAB_NO_BUILD=1
+        make install
+      #----------------------------------------------
+      #       Linting, formatting, etc (black, isort, flake and mypy)
+      #----------------------------------------------
+    - name: Run lint
+      run: make check
+      #----------------------------------------------
+      #       Tests
+      #----------------------------------------------
+    - name: Run tests
+      run: make test
