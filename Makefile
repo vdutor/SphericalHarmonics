@@ -21,11 +21,11 @@ help: ## Shows this help message
 install:  ## Install repo for developement
 	@echo "\n=== pip install package with requirements =============="
 	LAB_NO_BUILD=1 pip install backends
-	pip install -e .
 	@echo "\n=== pip install dev requirements ======================"
 	pip install -r requirements.txt
 	@echo "\n=== pip install test requirements ======================"
 	pip install -r dev_requirements.txt
+	pip install -e .
 
 
 format: ## Formats code with `black` and `isort`
