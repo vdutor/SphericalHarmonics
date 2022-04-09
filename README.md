@@ -20,7 +20,7 @@ from spherical_harmonics.utils import l2norm
 
 dimension = 3
 max_degree = 10
-# Returns all the spherical harmonics of degree 3 up to degree 10.
+# Returns all the spherical harmonics in dimension 3 up to degree 10.
 Phi = SphericalHarmonics(dimension, max_degree)
 
 x = np.random.randn(101, dimension)  # Create random points to evaluation Phi
