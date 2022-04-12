@@ -112,7 +112,7 @@ pip install backends
 
 Install package dependencies
 ```
-pip install -r requirements.py
+pip install -r requirements.txt
 ```
 followed by
 ```
@@ -122,7 +122,7 @@ These commands add the package `spherical_harmonics` to your Python path.
 
 We also recommend installing the dependencies to run the tests
 ```
-pip install -r test_requirements.py
+pip install -r dev_requirements.txt
 ```
 
 Checking if the installation was successful can be done by running the test

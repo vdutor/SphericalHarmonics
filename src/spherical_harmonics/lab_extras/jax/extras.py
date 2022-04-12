@@ -23,7 +23,7 @@ def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
 
 
 @dispatch
-def from_numpy(_: B.JAXNumeric, b: Union[list, List, B.NPNumeric, B.Number, B.JAXNumeric]):  # type: ignore
+def from_numpy(a: B.JAXNumeric, b: Union[list, List, B.NPNumeric, B.Number, B.JAXNumeric]):  # type: ignore
     """
     Converts the array `b` to a tensor of the same backend as `a`
     """

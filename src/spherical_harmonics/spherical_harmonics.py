@@ -21,6 +21,7 @@ from scipy.special import gegenbauer as scipy_gegenbauer
 
 from spherical_harmonics.fundamental_set import FundamentalSystemCache, num_harmonics
 from spherical_harmonics.gegenbauer_polynomial import Gegenbauer
+from spherical_harmonics.lab_extras import from_numpy
 from spherical_harmonics.utils import surface_area_sphere
 
 
@@ -147,7 +148,7 @@ class SphericalHarmonicsLevel:
         :return: `X` evaluated at the M spherical harmonics in the set.
             [\phi_m(x_i)], shape [M, N]
         """
-        VXT = B.matmul(self.V, X, tr_b=True)  # [M, N]
+        VXT = B.matmul(from_numpy(X, self.V), X, tr_b=True)  # [M, N]
         zonals = self.gegenbauer(VXT)  # [M, N]
         return B.matmul(self.L_inv, zonals)  # [M, N]
 
