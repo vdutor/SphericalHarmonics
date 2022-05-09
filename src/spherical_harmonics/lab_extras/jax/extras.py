@@ -19,7 +19,7 @@ def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
     ..math:
         p(x) = coeffs[n-1] + coeffs[n-2] * x + ... + coeffs[0] * x**(n-1)
     """
-    return jnp.polyval(coeffs, x)
+    return jnp.polyval(jnp.r_[coeffs], x)
 
 
 @dispatch
