@@ -5,6 +5,8 @@ import tensorflow as tf
 from lab import dispatch
 from plum import Union
 
+from spherical_harmonics.lab_extras import from_numpy
+
 _Numeric = Union[B.Number, B.TFNumeric, B.NPNumeric]
 
 
@@ -19,7 +21,8 @@ def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
     ..math:
         p(x) = coeffs[n-1] + coeffs[n-2] * x + ... + coeffs[0] * x**(n-1)
     """
-    return tf.math.polyval(coeffs, x)
+    coeff_list = [B.cast(B.dtype(x), coeff) for coeff in coeffs]
+    return tf.math.polyval(coeff_list, x)
 
 
 @dispatch
