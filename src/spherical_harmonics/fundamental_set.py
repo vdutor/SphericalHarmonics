@@ -231,11 +231,11 @@ def norm(vec: np.ndarray):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Pre-calculate fundamental system')
-    parser.add_argument('-d', '--dim', default=3, type=int, help='Dimension')
+    parser = argparse.ArgumentParser(description="Pre-calculate fundamental system")
+    parser.add_argument("-d", "--dim", default=3, type=int, help="Dimension")
     degrees_levels_group = parser.add_mutually_exclusive_group()
-    degrees_levels_group.add_argument('-m', '--max-harmonics', default=1000, type=int)
-    degrees_levels_group.add_argument('-l', '--max-degrees', type=int)
+    degrees_levels_group.add_argument("-m", "--max-harmonics", default=1000, type=int)
+    degrees_levels_group.add_argument("-l", "--max-degrees", type=int)
 
     args = parser.parse_args()
 
