@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import argparse
 from pathlib import Path
 
 import numpy as np
@@ -230,7 +231,13 @@ def norm(vec: np.ndarray):
 
 
 if __name__ == "__main__":
-    pass
+    parser = argparse.ArgumentParser(description='Pre-calculate fundamental system')
+    parser.add_argument('-d', '--dim', default=3, type=int, help='Dimension')
+    degrees_levels_group = parser.add_mutually_exclusive_group()
+    degrees_levels_group.add_argument('-m', '--max-harmonics', default=1000, type=int)
+    degrees_levels_group.add_argument('-l', '--max-degrees', type=int)
+
+    args = parser.parse_args()
 
     def calc_degrees(dimension: int, max_harmonics: int):
         harmonics = 0
@@ -241,14 +248,11 @@ if __name__ == "__main__":
         degree -= 1
         return degree
 
-    def regenerate_cache(dimension: int):
-        max_degrees = calc_degrees(dimension, max_harmonics=1000)
+    def regenerate_cache(dimension: int, max_degrees: int):
         FundamentalSystemCache(
             dimension, only_use_cache=False
         ).regenerate_and_save_cache(max_degrees)
 
-    # DIMENSIONS = range(3, 20)
-    # with Pool(6) as p:
-    #     p.map(regenerate_cache, DIMENSIONS)
+    max_degrees = args.max_degrees or calc_degrees(args.dim, args.max_harmonics)
 
-    regenerate_cache(3)
+    regenerate_cache(args.dim, max_degrees)
