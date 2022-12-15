@@ -17,7 +17,6 @@ from setuptools import find_packages, setup
 requirements = [
     "numpy",
     "scipy",
-    "tensorflow>=2.4.0",
 ]
 
 setup(
