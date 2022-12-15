@@ -5,8 +5,6 @@ import tensorflow as tf
 from lab import dispatch
 from plum import Union
 
-from spherical_harmonics.lab_extras import from_numpy
-
 _Numeric = Union[B.Number, B.TFNumeric, B.NPNumeric]
 
 
