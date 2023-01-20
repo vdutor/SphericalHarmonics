@@ -148,9 +148,11 @@ class SphericalHarmonicsLevel:
         :return: `X` evaluated at the M spherical harmonics in the set.
             [\phi_m(x_i)], shape [M, N]
         """
-        VXT = B.matmul(from_numpy(X, self.V), X, tr_b=True)  # [M, N]
+        VXT = B.matmul(
+            B.cast(B.dtype(X), from_numpy(X, self.V)), X, tr_b=True
+        )  # [M, N]
         zonals = self.gegenbauer(VXT)  # [M, N]
-        return B.matmul(self.L_inv, zonals)  # [M, N]
+        return B.matmul(B.cast(B.dtype(X), self.L_inv), zonals)  # [M, N]
 
     # TODO(Vincent) for some reason Optional[B.Numeric] doesn't work
     def addition(self, X: B.Numeric, Y: B.Numeric = None) -> B.Numeric:
