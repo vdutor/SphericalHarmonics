@@ -1,7 +1,6 @@
-from typing import List
-
 import lab as B
 import tensorflow as tf
+from beartype.typing import List
 from lab import dispatch
 from plum import Union
 
