@@ -61,6 +61,7 @@ def plot_spherical_function(
     # scale the colors
     fmax, fmin = fgrid.max(), fgrid.min()
     fcolors = (fgrid - fmin) / (fmax - fmin)
+    viridis = cm.get_cmap("viridis")
 
     ax.plot_surface(
         grid[:, 0].reshape(resolution, resolution) * scale,
@@ -68,7 +69,7 @@ def plot_spherical_function(
         grid[:, 2].reshape(resolution, resolution) * scale,
         rstride=1,
         cstride=1,
-        facecolors=cm.viridis(fcolors),
+        facecolors=viridis(fcolors),
     )
 
     # Turn off the axis planes
