@@ -13,10 +13,10 @@
 # limitations under the License.
 
 """ Spherical Harmonics and associated utility functions """
-from typing import List, Union
 
 import lab as B
 import numpy as np
+from beartype.typing import List, Union
 from scipy.special import gegenbauer as scipy_gegenbauer
 
 from spherical_harmonics.fundamental_set import FundamentalSystemCache, num_harmonics

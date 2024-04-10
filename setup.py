@@ -21,7 +21,7 @@ requirements = [
 
 setup(
     name="Spherical Harmonics",
-    version="0.0.1",
+    version="0.0.2a0",
     author="vd309@cam.ac.uk",
     description="Python Implementation of Spherical harmonics in dimension >= 3",
     packages=find_packages("src"),  # include all packages under src

@@ -27,7 +27,11 @@ def spherical_function_to_plot():
     return func
 
 
-@pytest.mark.parametrize("use_mesh", [True, False])
+# FIXME: the use_mesh=True test is commented out because it relies on meshzoo
+# which now requires a paid license. This could be fixed by using, e.g.,
+# potpourri3d instead of meshzoo.
+# @pytest.mark.parametrize("use_mesh", [True, False])
+@pytest.mark.parametrize("use_mesh", [False])
 @pytest.mark.parametrize("animate_steps", [0, 11])
 def test_plotting(spherical_function_to_plot, use_mesh, animate_steps):
     _ = plotly_plot_spherical_function(

@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import math
-from typing import List, Tuple, Union
 
 import lab as B
 import numpy as np
+from beartype.typing import List, Tuple, Union
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
 
