@@ -70,26 +70,26 @@ assert out.numpy().shape == (101, num_harmonics)
 
 The fundamental systems up to dimensino 20 are precomputed and stored in `spherical_harmonics/fundamental_system`. For each dimension we precompute the first amount of spherical harmonics. This means that in each dimension we support a varying number of maximum degree (`max_degree`) and number of spherical harmonics:
 
-|   Dimension |   Max Degree |   Number Harmonics |
-|------------:|-------------:|-------------------:|
-|           3 |           34 |               1156 |
-|           4 |           14 |               1015 |
-|           5 |           10 |               1210 |
-|           6 |            8 |               1254 |
-|           7 |            7 |               1386 |
-|           8 |            6 |               1122 |
-|           9 |            6 |               1782 |
-|          10 |            6 |               2717 |
-|          11 |            5 |               1287 |
-|          12 |            5 |               1729 |
-|          13 |            5 |               2275 |
-|          14 |            5 |               2940 |
-|          15 |            5 |               3740 |
-|          16 |            4 |                952 |
-|          17 |            4 |               1122 |
-|          18 |            4 |               1311 |
-|          19 |            4 |               1520 |
-|          20 |            4 |               1750 |
+| Dimension | Max Degree | Number Harmonics |
+|----------:|-----------:|-----------------:|
+|         3 |         34 |             1156 |
+|         4 |         20 |             2870 |
+|         5 |         10 |            16170 |
+|         6 |          8 |             1254 |
+|         7 |          7 |             1386 |
+|         8 |          6 |             1122 |
+|         9 |          6 |             1782 |
+|        10 |          6 |             2717 |
+|        11 |          5 |             1287 |
+|        12 |          5 |             1729 |
+|        13 |          5 |             2275 |
+|        14 |          5 |             2940 |
+|        15 |          5 |             3740 |
+|        16 |          4 |              952 |
+|        17 |          4 |             1122 |
+|        18 |          4 |             1311 |
+|        19 |          4 |             1520 |
+|        20 |          4 |             1750 |
 
 To precompute a larger fundamental system for a dimension run the following script
 ```
