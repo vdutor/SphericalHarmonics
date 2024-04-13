@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import argparse
+import warnings
 from pathlib import Path
+from typing import Optional
 
 import numpy as np
 from pkg_resources import resource_filename
@@ -48,18 +50,23 @@ class FundamentalSystemCache:
     harmonics in an arbitrary dimension"""
 
     def __init__(
-        self, dimension: int, load_dir="fundamental_system", only_use_cache: bool = True
+        self,
+        dimension: int,
+        load_dir="fundamental_system",
+        only_use_cache: bool = True,
+        strict_loading: bool = True,
     ):
         self.file_name = Path(
             resource_filename(__name__, f"{load_dir}/fs_{dimension}D.npz")
         )
         self.dimension = dimension
         self.only_use_cache = only_use_cache
+        self.strict_loading = strict_loading
 
         if self.file_name.exists():
             with np.load(self.file_name) as data:
                 self.cache = {k: v for (k, v) in data.items()}
-        elif only_use_cache:
+        elif only_use_cache and self.strict_loading:
             raise ValueError(
                 f"Fundamental system for dimension {dimension} has not been precomputed."
                 "Terminating computations. Precompute set by running `fundamental_set.py`"
@@ -67,23 +74,42 @@ class FundamentalSystemCache:
         else:
             self.cache = {}
 
+    @property
+    def max_computed_degree(self) -> int:
+        max_degree = -1
+        while True:
+            max_degree = max_degree + 1
+            key = self.cache_key(max_degree)
+            if key not in self.cache:
+                break
+        return max_degree
+
     def cache_key(self, degree: int) -> str:
         """Return the key used in the cache"""
         return f"degree_{degree}"
 
-    def load(self, degree: int) -> np.ndarray:
+    def load(self, degree: int) -> Optional[np.ndarray]:
         """Load or calculate the set for given degree"""
         key = self.cache_key(degree)
         if key not in self.cache:
-            if self.only_use_cache:
+            if self.only_use_cache and self.strict_loading:
                 raise ValueError(
                     f"Fundamental system for dimension {self.dimension} and degree "
                     f"{degree} has not been precomputed. Terminating "
                     "computations. Precompute set by running `fundamental_set.py`"
                 )
-            else:
+            elif not self.only_use_cache:
                 print("WARNING: Cache miss - calculating  system")
                 self.cache[key] = self.calculate(self.dimension, degree)
+
+        if key not in self.cache and not self.strict_loading:
+            warnings.warn(
+                f"Fundamental system for dimension {self.dimension} has been "
+                f"computed up to degree {self.max_computed_degree}. This means you will not "
+                "be able to evaluate individual spherical harmonics for larger degrees.",
+                RuntimeWarning,
+            )
+            return None
 
         return self.cache[key]
 
