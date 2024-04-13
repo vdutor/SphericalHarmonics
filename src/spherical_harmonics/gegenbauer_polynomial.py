@@ -142,7 +142,7 @@ class GegenbauerScipyCoefficients:
     def __init__(self, n: int, alpha: float):
         self.n = n
         self.alpha = alpha
-        C = scipy_gegenbauer(n, alpha)
+        self.C = scipy_gegenbauer(n, alpha)
         self._at_1 = C(1.0)
         self.coefficients = list(C.coefficients)
 
