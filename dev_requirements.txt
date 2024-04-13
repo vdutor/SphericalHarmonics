@@ -2,6 +2,7 @@ matplotlib
 
 tensorflow
 tensorflow-probability
+tf-keras
 
 black
 flake8

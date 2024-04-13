@@ -189,7 +189,6 @@ def calculate_decrement_in_determinant(Z, X_system, M_system_chol, gegenbauer):
 
 
 def grad_calculate_decrement_in_determinant(Z, X_system, M_system_chol, gegenbauer):
-
     r"""Calculate the negative determinant.
 
     :param Z: is a potential vector for the next fundamental point (it will get normalized)
