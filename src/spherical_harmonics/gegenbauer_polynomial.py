@@ -157,7 +157,7 @@ class GegenbauerScipyCoefficients:
 
         return self.C(x)
 
-    @dispatch
+    @dispatc # type: ignore[no-redef]
     def __call__(self, x: B.Numeric) -> B.Numeric:
         """x: [...], return [...]"""
         if self.n < 0:
