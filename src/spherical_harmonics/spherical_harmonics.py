@@ -37,6 +37,7 @@ class SphericalHarmonics:
         dimension: int,
         degrees: Union[int, List[int]],
         debug: bool = False,
+        allow_uncomputed_levels: bool = False,
     ):
         """
         :param dimension: if d = dimension, then
@@ -46,6 +47,8 @@ class SphericalHarmonics:
             if integer all levels (or degrees) up to `degrees` are used.
         highest degree of polynomial
             in the collection (exclusive)
+        :param allow_uncomputed_levels: if True, allow levels without the precomputed
+            fundamental system.
         :param debug: print debug messages.
         """
         assert (
@@ -56,7 +59,9 @@ class SphericalHarmonics:
         if isinstance(degrees, int):
             degrees = list(range(degrees))
 
-        self.fundamental_system = FundamentalSystemCache(dimension)
+        self.fundamental_system = FundamentalSystemCache(
+            dimension, strict_loading=not allow_uncomputed_levels
+        )
         self.harmonic_levels = [
             SphericalHarmonicsLevel(dimension, degree, self.fundamental_system)
             for degree in degrees
@@ -134,12 +139,21 @@ class SphericalHarmonicsLevel:
         self.surface_area_sphere = surface_area_sphere(dimension)
         # normalising constant
         c = self.alpha / (degree + self.alpha)
-        VtV = np.dot(self.V, self.V.T)
-        self.A = c * scipy_gegenbauer(self.degree, self.alpha)(VtV)
-        self.L = np.linalg.cholesky(self.A)  # [M, M]
-        # Cholesky inverse corresponds to the weights you get from Gram-Schmidt
-        self.L_inv = np.linalg.solve(self.L, np.eye(len(self.L)))
+
+        if self.is_level_computed:
+            VtV = np.dot(self.V, self.V.T)
+            self.A = c * scipy_gegenbauer(self.degree, self.alpha)(VtV)
+            self.L = np.linalg.cholesky(self.A)  # [M, M]
+            # Cholesky inverse corresponds to the weights you get from Gram-Schmidt
+            self.L_inv = np.linalg.solve(self.L, np.eye(len(self.L)))
         self.gegenbauer = Gegenbauer(self.degree, self.alpha)
+
+    @property
+    def is_level_computed(self) -> bool:
+        """
+        Whether the level has the fundamental system computed.
+        """
+        return self.V is not None
 
     def __call__(self, X: B.Numeric) -> B.Numeric:
         r"""
@@ -148,6 +162,13 @@ class SphericalHarmonicsLevel:
         :return: `X` evaluated at the M spherical harmonics in the set.
             [\phi_m(x_i)], shape [M, N]
         """
+        if not self.is_level_computed:
+            raise ValueError(
+                f"Fundamental system for dimension {self.dimension} and degree "
+                f"{self.degree} has not been precomputed. Terminating "
+                "computations. Precompute set by running `fundamental_set.py`"
+            )
+
         VXT = B.matmul(
             B.cast(B.dtype(X), from_numpy(X, self.V)), X, tr_b=True
         )  # [M, N]
