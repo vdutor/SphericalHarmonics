@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "SphericalHarmonics"
-version = "0.0.2a3"
+version = "0.0.2b1"
 authors = [{ name = "Vincent Dutordoir", email = "vd309@cam.ac.uk" }]
 description = "Python Implementation of Spherical harmonics in dimension >= 3"
 readme = "README.md"
