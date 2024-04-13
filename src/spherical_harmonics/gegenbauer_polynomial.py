@@ -143,8 +143,8 @@ class GegenbauerScipyCoefficients:
         self.n = n
         self.alpha = alpha
         self.C = scipy_gegenbauer(n, alpha)
-        self._at_1 = C(1.0)
-        self.coefficients = list(C.coefficients)
+        self._at_1 = self.C(1.0)
+        self.coefficients = list(self.C.coefficients)
 
     @dispatch
     def __call__(self, x: B.NPNumeric) -> B.Numeric:
