@@ -17,6 +17,7 @@ import math
 import lab as B
 import numpy as np
 from beartype.typing import List, Tuple, Union
+from lab import dispatch
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
 
@@ -145,6 +146,18 @@ class GegenbauerScipyCoefficients:
         self._at_1 = C(1.0)
         self.coefficients = list(C.coefficients)
 
+    @dispatch
+    def __call__(self, x: B.NPNumeric) -> B.Numeric:
+        if self.n < 0:
+            return B.zeros(x)
+        elif self.n == 0:
+            return B.ones(x)
+        elif self.n == 1:
+            return 2 * self.alpha * x
+
+        return self.C(x)
+
+    @dispatch
     def __call__(self, x: B.Numeric) -> B.Numeric:
         """x: [...], return [...]"""
         if self.n < 0:
