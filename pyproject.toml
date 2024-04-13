@@ -3,8 +3,8 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "SphericalHarmonics"
-version = "0.0.2a2"
+name = "spherical-harmonics"
+version = "0.0.2a3"
 authors = [{ name = "Vincent Dutordoir", email = "vd309@cam.ac.uk" }]
 description = "Python Implementation of Spherical harmonics in dimension >= 3"
 readme = "README.md"
