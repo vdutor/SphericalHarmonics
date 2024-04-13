@@ -1,13 +1,32 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "SphericalHarmonics"
+version = "0.0.2a2"
+authors = [{ name = "Vincent Dutordoir", email = "vd309@cam.ac.uk" }]
+description = "Python Implementation of Spherical harmonics in dimension >= 3"
+readme = "README.md"
+dependencies = [
+    "numpy",
+    "scipy",
+]
+
+[project.urls]
+Source = "https://github.com/vdutor/SphericalHarmonics"
+
+[tool.flit.module]
+name = "spherical_harmonics"
+
 [tool.mypy]
 ignore_missing_imports = true
 strict_optional = false
 allow_redefinition = true
 
-
 [tool.black]
 line-length = 88
 target-version = ['py37']
-
 
 [tool.isort]
 profile = "black"

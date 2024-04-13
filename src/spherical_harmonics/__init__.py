@@ -14,4 +14,6 @@
 
 # flake8: noqa
 
+"""Zonal Spherical Harmonics in d Dimensions in TensorFlow, PyTorch and Jax"""
+
 from .spherical_harmonics import SphericalHarmonics
