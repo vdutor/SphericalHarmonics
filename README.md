@@ -12,7 +12,7 @@ import spherical_harmonics.tensorflow  # noqa
 
 ### 3 Dimensional
 ```python
-import numpy as np
+import tensorflow as tf
 import spherical_harmonics.tensorflow  # run computation in TensorFlow
 
 from spherical_harmonics import SphericalHarmonics
@@ -23,8 +23,8 @@ max_degree = 10
 # Returns all the spherical harmonics in dimension 3 up to degree 10.
 Phi = SphericalHarmonics(dimension, max_degree)
 
-x = np.random.randn(101, dimension)  # Create random points to evaluation Phi
-x = x / l2norm(x)  # normalize vectors
+x = tf.random.normal((101, dimension))  # Create random points to evaluate Phi
+x = x / tf.norm(x, axis=1, keepdims=True)  # Normalize vectors
 out = Phi(x)  # Evaluate spherical harmonics at `x`
 
 # In 3D there are (2 * degree + 1) spherical harmonics per degree,
@@ -34,7 +34,7 @@ for degree in range(max_degree):
     num_harmonics += 2 * degree + 1
 assert num_harmonics == 100
 
-assert out.numpy().shape == (101, num_harmonics)
+assert out.shape == (101, num_harmonics)
 ```
 
 ### 4 Dimensional
@@ -62,13 +62,13 @@ for degree in range(max_degree):
     num_harmonics += (degree + 1) ** 2
 assert num_harmonics == 385
 
-assert out.numpy().shape == (101, num_harmonics)
+assert out.shape == (101, num_harmonics)
 ```
 
 ---
 **NOTE**
 
-The fundamental systems up to dimensino 20 are precomputed and stored in `spherical_harmonics/fundamental_system`. For each dimension we precompute the first amount of spherical harmonics. This means that in each dimension we support a varying number of maximum degree (`max_degree`) and number of spherical harmonics:
+The fundamental systems up to dimensions 20 are precomputed and stored in `spherical_harmonics/fundamental_system`. For each dimension we precompute the first amount of spherical harmonics. This means that in each dimension we support a varying number of maximum degree (`max_degree`) and number of spherical harmonics:
 
 | Dimension | Max Degree | Number Harmonics |
 |----------:|-----------:|-----------------:|
@@ -102,33 +102,13 @@ after specifying the desired options in the file.
 
 ## Installation
 
-The package is not available on PyPi. The recommended way to install it is to clone it from GitHub and to run (ideally in a [virtual environment](https://docs.python.org/3/tutorial/venv.html) or [`poetry`](https://python-poetry.org/) shell)
+The package is now available on PyPI under the name of `spherical-harmonics-basis`.
 
-First install [Lab](https://github.com/wesselb/lab) following [these instructions](https://gist.github.com/wesselb/4b44bf87f3789425f96e26c4308d0adc),
-then simply
+Simply run
 ```
-pip install backends
-```
-
-Install package dependencies
-```
-pip install -r requirements.txt
-```
-followed by
-```
-python setup.py develop
-```
-These commands add the package `spherical_harmonics` to your Python path.
-
-We also recommend installing the dependencies to run the tests
-```
-pip install -r dev_requirements.txt
+pip install spherical-harmonics-basis
 ```
 
-Checking if the installation was successful can be done by running the test
-```
-make test
-```
 
 ## Citation
 
