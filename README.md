@@ -74,7 +74,7 @@ The fundamental systems up to dimensions 20 are precomputed and stored in `spher
 |----------:|-----------:|-----------------:|
 |         3 |         34 |             1156 |
 |         4 |         20 |             2870 |
-|         5 |         10 |            16170 |
+|         5 |         10 |             1210 |
 |         6 |          8 |             1254 |
 |         7 |          7 |             1386 |
 |         8 |          6 |             1122 |
