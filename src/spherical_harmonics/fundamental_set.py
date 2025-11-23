@@ -56,7 +56,9 @@ class FundamentalSystemCache:
         strict_loading: bool = True,
     ):
         self.file_name = f"{load_dir}/fs_{dimension}D.npz"
-        self.resource_file = importlib.resources.files("spherical_harmonics") / self.file_name
+        self.resource_file = (
+            importlib.resources.files("spherical_harmonics") / self.file_name
+        )
         self.dimension = dimension
         self.only_use_cache = only_use_cache
         self.strict_loading = strict_loading
