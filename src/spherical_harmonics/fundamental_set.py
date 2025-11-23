@@ -56,7 +56,7 @@ class FundamentalSystemCache:
         only_use_cache: bool = True,
         strict_loading: bool = True,
     ):
-        self.file_name = Path(f"{load_dir}/fs_{dimension}D.npz")
+        self.file_name = f"{load_dir}/fs_{dimension}D.npz"
         self.resource_file = importlib.resources.files(__name__) / self.file_name
         self.dimension = dimension
         self.only_use_cache = only_use_cache
@@ -123,7 +123,7 @@ class FundamentalSystemCache:
             )
             system[f"degree_{degree}"] = d_system
         with open(self.file_name, "wb+") as f:
-            np.savez(f, **system)
+            np.savez(f, allow_pickle=True, **system)
 
     @staticmethod
     def calculate(
