@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import argparse
+import importlib.resources
 import warnings
 from pathlib import Path
 from typing import Optional
 
 import numpy as np
-from pkg_resources import resource_filename
 from scipy import linalg, optimize
 from scipy.special import comb as combinations
 from scipy.special import gegenbauer as ScipyGegenbauer
@@ -56,16 +56,16 @@ class FundamentalSystemCache:
         only_use_cache: bool = True,
         strict_loading: bool = True,
     ):
-        self.file_name = Path(
-            resource_filename(__name__, f"{load_dir}/fs_{dimension}D.npz")
-        )
+        self.file_name = Path(f"{load_dir}/fs_{dimension}D.npz")
+        self.resource_file = importlib.resources.files(__name__) / self.file_name
         self.dimension = dimension
         self.only_use_cache = only_use_cache
         self.strict_loading = strict_loading
 
-        if self.file_name.exists():
-            with np.load(self.file_name) as data:
-                self.cache = {k: v for (k, v) in data.items()}
+        if self.resource_file.is_file():
+            with self.resource_file.open("rb") as f:
+                with np.load(f) as data:
+                    self.cache = {k: v for (k, v) in data.items()}
         elif only_use_cache and self.strict_loading:
             raise ValueError(
                 f"Fundamental system for dimension {dimension} has not been precomputed."

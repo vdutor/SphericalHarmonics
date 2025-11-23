@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Spherical Harmonics and associated utility functions """
+"""Spherical Harmonics and associated utility functions"""
 
 import lab as B
 import numpy as np

@@ -9,9 +9,11 @@ authors = [{ name = "Vincent Dutordoir", email = "vd309@cam.ac.uk" }]
 description = "Python Implementation of Spherical harmonics in dimension >= 3"
 readme = "README.md"
 dependencies = [
+    "backends",
     "numpy",
     "scipy",
 ]
+requires-python=">=3.9"
 
 [project.urls]
 Source = "https://github.com/vdutor/SphericalHarmonics"
