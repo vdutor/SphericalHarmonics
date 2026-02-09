@@ -41,7 +41,7 @@ format: ## Formats code with `black` and `isort`
 
 check: ## Runs all static checks such as code formatting checks, linting, mypy
 	@echo "\n=== flake8 (linting)===================================="
-	flake8 --statistics --exclude=.ipynb_checkpoints
+	flake8 --statistics --exclude=.ipynb_checkpoints,.venv
 	@echo "\n=== black (formatting) ================================="
 	black --check --diff $(LINT_NAMES)
 	@echo "\n=== isort (formatting) ================================="

@@ -1,10 +1,10 @@
+from typing import TypeAlias
+
 import jax.numpy as jnp
 import lab as B
-from beartype.typing import List
 from lab import dispatch
-from plum import Union
 
-_Numeric = Union[B.Number, B.JAXNumeric]
+_Numeric: TypeAlias = B.Number | B.JAXNumeric
 
 
 @dispatch
@@ -22,7 +22,9 @@ def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
 
 
 @dispatch
-def from_numpy(a: B.JAXNumeric, b: Union[list, List, B.NPNumeric, B.Number, B.JAXNumeric]):  # type: ignore
+def from_numpy(
+    a: B.JAXNumeric, b: list | B.NPNumeric | B.Number | B.JAXNumeric
+):  # type: ignore
     """
     Converts the array `b` to a tensor of the same backend as `a`
     """

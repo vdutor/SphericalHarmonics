@@ -16,7 +16,6 @@ import math
 
 import lab as B
 import numpy as np
-from beartype.typing import List, Tuple, Union
 from lab import dispatch
 from scipy.special import gegenbauer as scipy_gegenbauer
 from scipy.special import loggamma
@@ -32,8 +31,8 @@ class Polynomial:
 
     def __init__(
         self,
-        coefficients: Union[List, np.ndarray],
-        powers: Union[List, np.ndarray],
+        coefficients: list | np.ndarray,
+        powers: list | np.ndarray,
     ):
         r"""
         The polynomial f(x) is given by f(x) = \sum_i c_i x^{p_i},
@@ -96,7 +95,7 @@ class GegenbauerManualCoefficients(Polynomial):
 
     def _compute_coefficients_and_powers(
         self, n: int, alpha: float
-    ) -> Tuple[List, List]:
+    ) -> tuple[list, list]:
         """
         Compute the weights (coefficients) and powers of the Gegenbauer functions
         expressed as polynomial.

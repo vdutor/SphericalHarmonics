@@ -9,11 +9,12 @@ authors = [{ name = "Vincent Dutordoir", email = "vd309@cam.ac.uk" }]
 description = "Python Implementation of Spherical harmonics in dimension >= 3"
 readme = "README.md"
 dependencies = [
-    "backends",
+    "backends>=1.8.0",
     "numpy",
+    "plum-dispatch>=2.6.0",
     "scipy",
 ]
-requires-python=">=3.9"
+requires-python=">=3.10"
 
 [project.urls]
 Source = "https://github.com/vdutor/SphericalHarmonics"
@@ -28,7 +29,7 @@ allow_redefinition = true
 
 [tool.black]
 line-length = 88
-target-version = ['py37']
+target-version = ['py310', 'py311', 'py312']
 
 [tool.isort]
 profile = "black"
@@ -37,5 +38,4 @@ skip_glob = [
 ]
 known_third_party = [
      "lab",
-     "plum",
 ]
