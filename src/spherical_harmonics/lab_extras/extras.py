@@ -1,8 +1,6 @@
 import lab as B
-from beartype.typing import List
 from lab import dispatch
 from lab.util import abstract
-from plum import Union
 
 
 @dispatch
@@ -21,7 +19,7 @@ def polyval(coeffs: list, x: B.Numeric):
 
 @dispatch
 @abstract()
-def from_numpy(_: B.Numeric, b: Union[list, List, B.Numeric, B.NPNumeric]):
+def from_numpy(_: B.Numeric, b: list | B.Numeric | B.NPNumeric):
     """
     Converts the array `b` to a tensor of the same backend as `a`
     """

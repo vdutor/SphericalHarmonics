@@ -1,10 +1,10 @@
+from typing import TypeAlias
+
 import lab as B
 import numpy as np
-from beartype.typing import List
 from lab import dispatch
-from plum import Union
 
-_Numeric = Union[B.Number, B.NPNumeric]
+_Numeric: TypeAlias = B.Number | B.NPNumeric
 
 
 @dispatch
@@ -22,7 +22,7 @@ def polyval(coeffs: list, x: _Numeric) -> _Numeric:  # type: ignore
 
 
 @dispatch
-def from_numpy(a: B.NPNumeric, b: Union[list, List, B.NPNumeric, B.Number]):  # type: ignore
+def from_numpy(a: B.NPNumeric, b: list | B.NPNumeric | B.Number):  # type: ignore
     """
     Converts the array `b` to a tensor of the same backend as `a`
     """

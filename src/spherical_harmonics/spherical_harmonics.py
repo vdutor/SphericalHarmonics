@@ -16,7 +16,6 @@
 
 import lab as B
 import numpy as np
-from beartype.typing import List, Union
 from scipy.special import gegenbauer as scipy_gegenbauer
 
 from spherical_harmonics.fundamental_set import FundamentalSystemCache, num_harmonics
@@ -35,7 +34,7 @@ class SphericalHarmonics:
     def __init__(
         self,
         dimension: int,
-        degrees: Union[int, List[int]],
+        degrees: int | list[int],
         debug: bool = False,
         allow_uncomputed_levels: bool = False,
     ):
@@ -223,7 +222,7 @@ class SphericalHarmonicsLevel:
         )  # [N, 1]
         return (self.degree / self.alpha + 1.0) * c  # [N, 1]
 
-    def eigenvalue(self) -> Union[int, float, np.ndarray]:
+    def eigenvalue(self) -> int | float | np.ndarray:
         """
         Spherical harmonics are eigenfunctions of the Laplace-Beltrami operator
         (also known as the Spherical Laplacian). We return the associated
@@ -239,8 +238,8 @@ class SphericalHarmonicsLevel:
 
 
 def eigenvalue_harmonics(
-    degrees: Union[int, float, np.ndarray], dimension: int
-) -> Union[int, float, np.ndarray]:
+    degrees: int | float | np.ndarray, dimension: int
+) -> int | float | np.ndarray:
     """
     Eigenvalue of a spherical harmonic of a specific degree.
 

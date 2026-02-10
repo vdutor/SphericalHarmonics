@@ -1,5 +1,3 @@
-from typing import List, Union
-
 import lab as B
 import numpy as np
 import pytest
@@ -165,9 +163,7 @@ class SphericalHarmonics2(SphericalHarmonics):
     the one in `SphericalHarmonicsCollection` as we don't make use of a `map`.
     """
 
-    def __init__(
-        self, dimension: int, degrees: Union[int, List[int]], debug: bool = True
-    ):
+    def __init__(self, dimension: int, degrees: int | list[int], debug: bool = True):
         """
         :param dimension: if d = dimension, then
             S^{d-1} = { x ∈ R^d and ||x||_2 = 1 }

@@ -15,7 +15,6 @@
 import argparse
 import importlib.resources
 import warnings
-from typing import Optional
 
 import numpy as np
 from scipy import linalg, optimize
@@ -89,7 +88,7 @@ class FundamentalSystemCache:
         """Return the key used in the cache"""
         return f"degree_{degree}"
 
-    def load(self, degree: int) -> Optional[np.ndarray]:
+    def load(self, degree: int) -> np.ndarray | None:
         """Load or calculate the set for given degree"""
         key = self.cache_key(degree)
         if key not in self.cache:

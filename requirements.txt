@@ -1,3 +1,4 @@
 plotly
 matplotlib
-backends
+backends>=1.8.0
+plum-dispatch>=2.6.0
